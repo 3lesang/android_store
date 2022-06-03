@@ -85,8 +85,7 @@ public class ProductFragment extends Fragment {
         listProduct.add(new Product("https://cdn.tgdd.vn/Products/Images/42/232668/samsung-galaxy-z-fold-2-vang-600x600-600x600.jpg", "Samsung Galaxy Z Fold2 5G","Thuộc dòng smartphone cao cấp, Samsung Galaxy Z Fold2 5G được Samsung trau chuốt không chỉ vẻ ngoài sang trọng, tinh tế mà lẫn cả “nội thất” bên trong đầy mạnh mẽ khiến chiếc smartphone này hoàn toàn xứng đáng để được sở hữu.", "samsung", 50000000));
         listProduct.add(new Product("https://cdn.tgdd.vn/Products/Images/42/210644/iphone-11-128gb-green-600x600.jpg", "iPhone 11 128GB","Được xem là phiên bản iPhone \\\"giá rẻ\\\" trong bộ 3 iPhone mới ra mắt nhưng iPhone 11 128GB vẫn sở hữu cho mình rất nhiều ưu điểm mà hiếm có một chiếc smartphone nào khác sở hữu. Nâng cấp mạnh mẽ về cụm camera Năm nay với iPhone 11 thì Apple đã nâng cấp khá nhiều về camera nếu so sánh với chiếc iPhone Xr 128GB năm ngoái.", "iphone", 19490000));
         listProduct.add(new Product("https://cdn.tgdd.vn/Products/Images/42/210644/iphone-11-128gb-green-600x600.jpg", "","iPhone SE 256GB 2020 cuối cùng đã được Apple ra mắt, với ngoại hình nhỏ gọn được sao chép từ iPhone 8 nhưng mang trong mình một hiệu năng mạnh mẽ với vi xử lý A13 Bionic, mức giá hấp dẫn hứa hẹn sẽ là yếu tố thu hút", "iphone", 19490000));
-//        listProduct.add(new Product("", "","", "", 1));
-//        listProduct.add(new Product("", "","", "", 1));
+
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("DBProduct");
@@ -104,8 +103,8 @@ public class ProductFragment extends Fragment {
         atcProductSearch = mView.findViewById(R.id.atc_product_search);
         nestedScrollViewProduct = mView.findViewById(R.id.scrollViewProduct);
         listSlidePhoto = getListSlidePhoto();
-//        listAllProduct = getDataProduct();
-        listAllProduct = getProducts();
+        listAllProduct = new ArrayList<Product>();
+        getProducts(listAllProduct);
 
         nestedScrollViewProduct.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -122,7 +121,7 @@ public class ProductFragment extends Fragment {
 //                        // a method to load data in our array list.
 //
 //                    }
-                    getProducts();
+                    getProducts(listAllProduct);
                 }
             }
         });
@@ -205,36 +204,7 @@ public class ProductFragment extends Fragment {
         return listSlidePhoto;
     }
 
-    private List<Product> getDataProduct(){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("DBProduct");
-
-
-        List<Product> mListProduct = new ArrayList<>();
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                productAdapter.notifyDataSetChanged();
-
-                for (DataSnapshot data : snapshot.getChildren()){
-                    Product product = data.getValue(Product.class);
-                    product.setId(data.getKey());
-                    mListProduct.add(product);
-                }
-                setProductSearchAdapter(mListProduct);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(),"Không tải được dữ liệu từ firebase"
-                        +error.toString(),Toast.LENGTH_LONG).show();
-                Log.d("MYTAG","onCancelled"+ error.toString());
-            }
-        });
-        return mListProduct;
-    }
-    private List<Product> getProducts() {
+    private void getProducts(List<Product> products) {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("DBProduct");
@@ -251,7 +221,8 @@ public class ProductFragment extends Fragment {
                     Product product = data.getValue(Product.class);
                     product.setId(data.getKey());
                     System.out.println(data.getKey());
-                    mListProduct.add(product);
+                    products.add(product);
+
                 }
                 setProductSearchAdapter(mListProduct);
                 startProduct += (limitProduct + 1);
@@ -266,7 +237,6 @@ public class ProductFragment extends Fragment {
 
 
         });
-        return mListProduct;
 
     }
 

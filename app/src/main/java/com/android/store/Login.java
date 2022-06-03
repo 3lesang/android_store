@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Login extends AppCompatActivity {
 
-    Button btn_ok, btn_cancel, btn_forgot;
+    Button btn_ok, btn_cancel;
+    TextView btn_forgot;
     EditText txt_uname, txt_pwd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,7 @@ public class Login extends AppCompatActivity {
     }
     public void onClick_Forgot(View view) {
         if(view.getId() == R.id.btn_forgot) {
-            Toast.makeText(Login.this, "xin lỗi tính năng này hiện không hỗ trợ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Login.this, "Xin lỗi tính năng này hiện không hỗ trợ", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -13,12 +13,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.store.Admin;
+import com.android.store.AdminProduct;
 import com.android.store.MainActivity;
 import com.android.store.R;
 import com.android.store.adapter.ProductAdapter;
@@ -27,10 +29,12 @@ import com.android.store.adapter.ProductSearchAdapter;
 import com.android.store.adapter.SlidePhotoAdapter;
 import com.android.store.model.Product;
 import com.android.store.model.SlidePhoto;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -43,90 +47,62 @@ import me.relex.circleindicator.CircleIndicator;
 public class ProductFragmentAdmin extends Fragment {
     private Admin home;
     private Timer mTimer;
-    private List<SlidePhoto> listSlidePhoto;
     private List<Product> listAllProduct;
-
     private View mView;
     private RecyclerView rcvProduct;
-    private ViewPager viewPagerSlidePhoto;
-    private CircleIndicator circleIndicator;
-    private AutoCompleteTextView atcProductSearch;
-
     private ProductAdapterAdmin productAdapterAdmin;
-    private SlidePhotoAdapter slidePhotoAdapter;
+    private NestedScrollView nestedScrollViewProduct;
 
-
+    private MaterialButton btnDeleteProductAdmin;
+    private MaterialButton btnEditProductAdmin;
+    private int limitProduct = 8;
+    private int startProduct = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
 
         mView = inflater.inflate(R.layout.activity_admin_product, container, false);
-        // Khởi tạo các item
         initItem();
-
-        // Set Adapter cho viewPagerSlidePhoto
-        //setDataSlidePhotoAdapter();
-
-        // Set Adapter cho rcvProduct
         setDataProductAdapter();
         return mView;
     }
     private void initItem(){
         rcvProduct = mView.findViewById(R.id.rcv_product_admin);
-        viewPagerSlidePhoto = mView.findViewById(R.id.vp_slide_photo);
-        circleIndicator = mView.findViewById(R.id.circle_indicator);
-        atcProductSearch = mView.findViewById(R.id.atc_product_search);
+        nestedScrollViewProduct = mView.findViewById(R.id.scrollViewProductAdmin);
 
-        //listSlidePhoto = getListSlidePhoto();
-        listAllProduct = getDataProduct();
+        btnDeleteProductAdmin = mView.findViewById(R.id.btn_delete_product_admin);
+        btnDeleteProductAdmin = mView.findViewById(R.id.btn_edit_product_admin);
+        listAllProduct = new ArrayList<Product>();
+        getProducts(listAllProduct);
 
-        //home = (Admin) getActivity();
-    }
-    private void setDataSlidePhotoAdapter(){
-        slidePhotoAdapter = new SlidePhotoAdapter(listSlidePhoto, this);
-        viewPagerSlidePhoto.setAdapter(slidePhotoAdapter);
-        circleIndicator.setViewPager(viewPagerSlidePhoto);
-        slidePhotoAdapter.registerDataSetObserver(circleIndicator.getDataSetObserver());
 
-        // Auto chuyển các slide photo
-        autoSildeImage();
-    }
-
-    private void autoSildeImage(){
-        if(listSlidePhoto == null || listSlidePhoto.isEmpty() || viewPagerSlidePhoto == null){
-            return;
-        }
-        if (mTimer == null){
-            mTimer = new Timer();
-        }
-        mTimer.schedule(new TimerTask() {
+        nestedScrollViewProduct.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
-            public void run() {
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        int currentItem = viewPagerSlidePhoto.getCurrentItem();
-                        int totalItem = listSlidePhoto.size() - 1;
-
-                        // Nếu item hiện tại chưa phải cuối cùng
-                        if(currentItem < totalItem){
-                            currentItem++;
-                            viewPagerSlidePhoto.setCurrentItem(currentItem);
-                        }else {
-                            viewPagerSlidePhoto.setCurrentItem(0);
-                        }
-                    }
-                });
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                // on scroll change we are checking when users scroll as bottom.
+                if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) {
+                    // in this method we are incrementing page number,
+                    // making progress bar visible and calling get data method.
+                    limitProduct++;
+                    // on below line we are making our progress bar visible.
+//                    loadingPB.setVisibility(View.VISIBLE);
+//                    if (count < 20) {
+//                        // on below line we are again calling
+//                        // a method to load data in our array list.
+//
+//                    }
+                    System.out.println("overscroll");
+                    getProducts(listAllProduct);
+                }
             }
-
-            // xử lý thêm để set time
-        },500,3000 );
+        });
+        home = (Admin) getActivity();
     }
 
     // Set Adapter cho rcvProduct
     private void setDataProductAdapter(){
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(home, 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(home, 1);
         rcvProduct.setLayoutManager(gridLayoutManager);
 
         productAdapterAdmin = new ProductAdapterAdmin();
@@ -134,44 +110,39 @@ public class ProductFragmentAdmin extends Fragment {
 
         rcvProduct.setAdapter(productAdapterAdmin);
     }
-    private List<SlidePhoto> getListSlidePhoto(){
-        List<SlidePhoto> listSlidePhoto = new ArrayList<>();
-        listSlidePhoto.add(new SlidePhoto(R.drawable.slide1));
-        listSlidePhoto.add(new SlidePhoto(R.drawable.slide2));
-        listSlidePhoto.add(new SlidePhoto(R.drawable.slide3));
-        listSlidePhoto.add(new SlidePhoto(R.drawable.slide4));
-        listSlidePhoto.add(new SlidePhoto(R.drawable.slide5));
-        return listSlidePhoto;
-    }
-    private List<Product> getDataProduct(){
+
+
+    private void getProducts(List<Product> products) {
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("DBProduct");
-
-        com.android.store.model.Product product = new com.android.store.model.Product("https://3g.co.uk/userfiles/products/n_1474-1.jpg", "iphone 12 pro", "day la iphone", "apple", 2000);
-        myRef.child("1").setValue(product);
-        List<com.android.store.model.Product> mListProduct = new ArrayList<>();
-
-        myRef.addValueEventListener(new ValueEventListener() {
+        Query productListQuery = myRef.limitToFirst(limitProduct).orderByChild("brand")
+                .startAt(startProduct);
+        List<Product> mListProduct = new ArrayList<>();
+        productListQuery.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void onDataChange(DataSnapshot snapshot) {
+
                 productAdapterAdmin.notifyDataSetChanged();
 
                 for (DataSnapshot data : snapshot.getChildren()){
-                    com.android.store.model.Product product = data.getValue(com.android.store.model.Product.class);
+                    Product product = data.getValue(Product.class);
                     product.setId(data.getKey());
-                    mListProduct.add(product);
+                    products.add(product);
+
                 }
-                //setProductSearchAdapter(mListProduct);
+                startProduct += (limitProduct + 1);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(getActivity(),"Không tải được dữ liệu từ firebase"
-                        +error.toString(),Toast.LENGTH_LONG).show();
-                Log.d("MYTAG","onCancelled"+ error.toString());
+                        +databaseError.toString(),Toast.LENGTH_LONG).show();
+                Log.d("MYTAG","onCancelled"+ databaseError.toString());
             }
+
         });
-        return mListProduct;
+
     }
 
 }
