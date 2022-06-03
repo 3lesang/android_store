@@ -159,7 +159,7 @@ public class CartFragment extends Fragment {
         map.put("custPhone",edtCartCustPhone.getText().toString());
 
         int num = 0;
-        for (Product product : listCartProduct){
+        for (Product product : listCartProduct) {
             num = num + product.getNumProduct();
         }
         map.put("numProduct",num);
@@ -240,6 +240,5 @@ public class CartFragment extends Fragment {
         listCartProduct.get(possion).setNumProduct(countProduct);
     }
 
-    // endregion Public menthod
 
 }

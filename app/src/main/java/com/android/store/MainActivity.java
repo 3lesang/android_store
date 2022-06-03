@@ -13,6 +13,7 @@ import com.android.store.fragment.OrderInfoFragment;
 import com.android.store.fragment.ProductFragment;
 import com.android.store.model.Order;
 import com.android.store.model.Product;
+import com.android.store.ultil.CheckInternetConnection;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
@@ -38,7 +39,17 @@ public class MainActivity extends AppCompatActivity {
 
         initItem();
 
-        setDataBotNavHome();
+        if(CheckInternetConnection.haveNetworkConnection(getApplicationContext()))
+        {
+            setDataBotNavHome();
+        }
+        else
+        {
+            CheckInternetConnection.ShowToast_Short(getApplicationContext(),"Check Internet Connection");
+//            finish();
+        }
+
+
     }
 
     private void initItem() {

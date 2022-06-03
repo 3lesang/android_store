@@ -4,10 +4,22 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/bg_form.xml" value="0.215" />
+        <entry key="app/src/main/res/drawable/custom_button.xml" value="0.242" />
+        <entry key="app/src/main/res/drawable/custom_button_gray.xml" value="0.201" />
+        <entry key="app/src/main/res/drawable/custom_button_red.xml" value="0.242" />
+        <entry key="app/src/main/res/drawable/custom_edit_text.xml" value="0.237" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.34629629629629627" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.34629629629629627" />
+        <entry key="app/src/main/res/layout/fragment_cart.xml" value="0.34629629629629627" />
         <entry key="app/src/main/res/layout/fragment_detail_product.xml" value="0.34629629629629627" />
+        <entry key="app/src/main/res/layout/fragment_history.xml" value="0.34629629629629627" />
         <entry key="app/src/main/res/layout/fragment_order_info.xml" value="0.34629629629629627" />
+        <entry key="app/src/main/res/layout/fragment_product.xml" value="0.34629629629629627" />
+        <entry key="app/src/main/res/layout/item_cart.xml" value="0.34629629629629627" />
         <entry key="app/src/main/res/layout/item_history.xml" value="0.34629629629629627" />
-        <entry key="app/src/main/res/layout/item_product.xml" value="0.18697916666666667" />
+        <entry key="app/src/main/res/layout/item_order_info.xml" value="0.34629629629629627" />
+        <entry key="app/src/main/res/layout/item_product.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/item_search.xml" value="0.34629629629629627" />
         <entry key="app/src/main/res/layout/item_slide_photo.xml" value="0.34629629629629627" />
       </map>
     </option>

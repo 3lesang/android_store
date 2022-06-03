@@ -12,6 +12,7 @@ public class Product {
     private int numProduct = 1;
 
     public Product(){
+
     }
 
     public Product(String urlImg, String productName, String description,String brand, int productPrice) {

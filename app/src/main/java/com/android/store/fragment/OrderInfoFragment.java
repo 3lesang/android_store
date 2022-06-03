@@ -21,8 +21,6 @@ import java.text.DecimalFormat;
 
 public class OrderInfoFragment extends Fragment {
 
-    // region Variable
-
     private DecimalFormat formatPrice = new DecimalFormat("###,###,###");
     public static final String TAG = OrderInfoFragment.class.getName();
     private Order order;
@@ -36,8 +34,6 @@ public class OrderInfoFragment extends Fragment {
 
     private OrderInfoAdapter orderInfoAdapter;
 
-    // endregion Variable
-
     public OrderInfoFragment(Order orderInfo) {
         order = orderInfo;
     }
@@ -48,21 +44,15 @@ public class OrderInfoFragment extends Fragment {
 
         mView =  inflater.inflate(R.layout.fragment_order_info, container, false);
 
-        // Khởi tạo các item
         initItem();
 
-        // Set nội dung cho các item
         setContentOrder();
 
-        // Set data cho OrderInfoAdapter
         setDataOrderInfoAdapter();
 
         return mView;
     }
 
-    // region Private menthod
-
-    // Khởi tạo các item
     private void initItem(){
         orderInfoAdapter = new OrderInfoAdapter();
         home = (MainActivity) getActivity();
@@ -86,7 +76,6 @@ public class OrderInfoFragment extends Fragment {
         });
     }
 
-    // Set nội dung cho các item
     private void setContentOrder(){
         tvOrderInfoNo.setText(order.getOrderNo().toUpperCase());
         tvOrderInfoDate.setText(order.getDateOrder());
@@ -98,14 +87,11 @@ public class OrderInfoFragment extends Fragment {
         tvOrderInfoStatus.setText(order.getStatus());
     }
 
-    // Set data cho OrderInfoAdapter
     private void setDataOrderInfoAdapter(){
         orderInfoAdapter.setData(order.getListDetailOrder());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(home,RecyclerView.VERTICAL,false);
         rcvOrderInfo.setLayoutManager(linearLayoutManager);
         rcvOrderInfo.setAdapter(orderInfoAdapter);
     }
-
-    // endregion Private menthod
 
 }

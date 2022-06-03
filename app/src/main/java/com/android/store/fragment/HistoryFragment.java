@@ -30,8 +30,6 @@ import java.util.List;
 
 public class HistoryFragment extends Fragment {
 
-    // region Variable
-
     private MainActivity home;
     private List<Order> listOrder;
     private List<DetailOrder> listDetailOrder;
@@ -42,8 +40,6 @@ public class HistoryFragment extends Fragment {
     private RecyclerView rcvHitorySearch;
 
     private HistoryProductAdapter historyProductAdapter;
-
-    // endregion Variable
 
     public HistoryFragment() {
     }
@@ -69,9 +65,6 @@ public class HistoryFragment extends Fragment {
         return mView;
     }
 
-    // region Private menthod
-
-    // Khởi tạo các item
     private void initItem(){
         listOrder = new ArrayList<>();
         listDetailOrder = new ArrayList<>();
@@ -92,7 +85,6 @@ public class HistoryFragment extends Fragment {
         });
     }
 
-    // set data cho HistoryProductAdapter
     private void setDataHistoryProductAdapter(){
         historyProductAdapter.setData(listDetailOrder,listOrder,home);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(home,RecyclerView.VERTICAL,false);
@@ -100,18 +92,14 @@ public class HistoryFragment extends Fragment {
         rcvHitorySearch.setAdapter(historyProductAdapter);
     }
 
-    // Lấy thông tin order
     private void findOrder(){
 
-        // Clear các list dữ liệu khi tìm kiếm
         listOrder.clear();
         listDetailOrder.clear();
 
-        // Kết nối tới data base
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("DbOrder");
 
-        // Lấy thông tin order
         myRef.orderByChild("custPhone").equalTo(edtHistoryPhone.getText().toString())
                 .addValueEventListener(new ValueEventListener() {
 
@@ -141,7 +129,6 @@ public class HistoryFragment extends Fragment {
         });
     }
 
-    // Lấy thông tin detail order
     private void findDetailOrder( DatabaseReference myRef){
         if (listOrder.size() > 0){
             for (int i = 0; i<listOrder.size(); i++){
@@ -170,7 +157,5 @@ public class HistoryFragment extends Fragment {
             }
         }
     }
-
-    // endregion Private menthod
 
 }

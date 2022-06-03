@@ -25,7 +25,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private MainActivity home;
 
     // Khai báo Interface giúp cho việc click vào phần tử của recycleview
-    public interface IClickItemProductListener{
+    public interface IClickItemProductListener {
         void onClickItemProduct(Product product);
     }
 
