@@ -50,8 +50,9 @@ public class AdminProduct extends AppCompatActivity {
         btnInsertdata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NoticeProduct();
+
                 insertProductData();
+
 
                 //Toast.makeText(AdminProduct.this, DescriptionProduct.getText().toString(), Toast.LENGTH_SHORT).show();
             }
@@ -62,7 +63,8 @@ public class AdminProduct extends AppCompatActivity {
     }
     public void NoticeProduct(){
         Intent intent = new Intent(this,MyService.class);
-        intent.putExtra("keydata",DescriptionProduct.getText().toString());
+        intent.putExtra("key","tên sản phẩm:  "+NameProduct.getText().toString().trim()+"           giá: "+PriceProduct.getText().toString().trim()+  "  VNĐ");
+
         startService(intent);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -87,6 +89,8 @@ public class AdminProduct extends AppCompatActivity {
             Toast.makeText(AdminProduct.this, "data inserted", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(AdminProduct.this, Admin.class);
             startActivity(intent);
+
+            NoticeProduct();
         }
     }
 

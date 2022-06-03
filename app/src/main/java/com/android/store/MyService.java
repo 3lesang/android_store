@@ -25,7 +25,7 @@ public class MyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        String string= intent.getStringExtra("keydata");
+        String string= intent.getStringExtra("key");
         sendNotification(string);
         return START_NOT_STICKY;
     }
@@ -38,10 +38,10 @@ public class MyService extends Service {
 
     public void sendNotification(String string)
     {
-        Intent intent = new Intent(this, AdminProduct.class);
+        Intent intent = new Intent(this, Admin.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = new NotificationCompat.Builder(this,CHANNEL_ID)
-                .setContentTitle("Download Manager")
+                .setContentTitle("APP STORE MOBILE")
                 .setContentText(string)
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentIntent(pendingIntent)
