@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Login">
+    <TextView
+        android:text="LOGIN"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username:" />
+
+        <EditText
+            android:id="@+id/txt_uname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password:" />
+
+        <EditText
+            android:id="@+id/txt_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </TableRow>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp">
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="OK"
+            android:onClick="onClick_Ok"
+            tools:ignore="OnClick" />
+        <Button
+            android:id="@+id/btn_cancel"
+            android:text="CANCEL"
+            android:onClick="onClick_Cancel"
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="OnClick" />
+
+        <Button
+            android:id="@+id/btn_forgot"
+            android:layout_width="203dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="FORGOT PASSWORD"
+            android:onClick="onClick_Forgot"
+            tools:ignore="OnClick" />
+    </LinearLayout>
+</LinearLayout>

@@ -40,13 +40,12 @@
                 android:id="@+id/tv_order_info_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_below="@+id/tv_order_info_text1"
+                android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/tv_order_info_text2"
                 android:text="AAAAA"
-                android:textSize="15sp"
-                android:textColor="@color/teal_200">
-            </TextView>
+                android:textColor="@color/teal_200"
+                android:textSize="15sp"></TextView>
 
             <TextView
                 android:id="@+id/tv_order_info_text3"
@@ -63,13 +62,12 @@
                 android:id="@+id/tv_order_info_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_below="@+id/tv_order_info_text2"
+                android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/tv_order_info_text3"
                 android:text="27-01-2021"
-                android:textSize="15sp"
-                android:textColor="@color/text_color">
-            </TextView>
+                android:textColor="@color/text_color"
+                android:textSize="15sp"></TextView>
 
             <TextView
                 android:id="@+id/tv_order_info_text4"
@@ -86,13 +84,12 @@
                 android:id="@+id/tv_order_info_cust_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_below="@+id/tv_order_info_text3"
+                android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/tv_order_info_text4"
                 android:text="Trí"
-                android:textSize="15sp"
-                android:textColor="@color/text_color">
-            </TextView>
+                android:textColor="@color/text_color"
+                android:textSize="15sp"></TextView>
 
             <TextView
                 android:id="@+id/tv_order_info_text5"
@@ -225,18 +222,16 @@
                 android:layout_below="@+id/divider2"
                 android:layout_marginTop="10dp"
                 android:text="Thông Tin Sản Phẩm :"
-                android:textSize="15sp"
-                android:textColor="@color/text_color">
-            </TextView>
+                android:textColor="@color/text_color"
+                android:textSize="15sp"></TextView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcv_order_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_below="@+id/tv_order_info_text10"
                 android:layout_marginLeft="5dp"
-                android:layout_below="@+id/tv_order_info_text10">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_marginTop="10dp"></androidx.recyclerview.widget.RecyclerView>
 
             <Button
                 android:id="@+id/btn_order_info_back"

@@ -151,14 +151,16 @@
                 android:id="@+id/btn_cart_order"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@+id/edt_cart_cust_phone"
-                android:text="Đặt Hàng"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/custom_button"
                 android:backgroundTint="@null"
-                app:backgroundTint="@null">
-            </Button>
+                android:text="Đặt Hàng"
+                app:backgroundTint="@null"></Button>
 
         </RelativeLayout>
 
