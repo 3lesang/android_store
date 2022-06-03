@@ -210,7 +210,7 @@ public class ProductFragment extends Fragment {
         DatabaseReference myRef = database.getReference("DBProduct");
         Query productListQuery = myRef.limitToFirst(limitProduct).orderByChild("brand")
                 .startAt(startProduct);
-        List<Product> mListProduct = new ArrayList<>();
+
         productListQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -224,7 +224,7 @@ public class ProductFragment extends Fragment {
                     products.add(product);
 
                 }
-                setProductSearchAdapter(mListProduct);
+                setProductSearchAdapter(products);
                 startProduct += (limitProduct + 1);
             }
 
