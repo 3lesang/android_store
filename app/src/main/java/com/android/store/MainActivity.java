@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import com.android.store.fragment.CartFragment;
 import com.android.store.fragment.DetailProductFragment;
@@ -16,8 +19,6 @@ import com.android.store.model.Product;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,15 +53,18 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+
     private void setDataBotNavHome() {
 
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.tab_product, R.drawable.ic_baseline_home_24, R.color.teal_200);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.tab_cart, R.drawable.ic_baseline_add_shopping_cart_24, R.color.gray);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.tab_history, R.drawable.ic_baseline_history_24, R.color.yellow);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem("login", R.drawable.ic_baseline_account_box_24, R.color.teal_200);
 
         ahBotNavHome.addItem(item1);
         ahBotNavHome.addItem(item2);
         ahBotNavHome.addItem(item3);
+        ahBotNavHome.addItem(item4);
 
         ahBotNavHome.setColored(false);
 
@@ -86,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.contet_frame, new HistoryFragment());
                         fragmentTransaction.commit();
+                        break;
+                    case 3:
+                        Intent intent = new Intent(MainActivity.this, Login.class);
+                        startActivity(intent);
                         break;
                 }
 

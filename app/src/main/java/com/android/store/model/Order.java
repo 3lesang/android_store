@@ -100,10 +100,10 @@ public class Order {
         this.listDetailOrder = listDetailOrder;
     }
 
-    public void addToListDetailOrder(DetailOrder detailOrder){
-        if (this.listDetailOrder == null){
-            this.listDetailOrder = new ArrayList<>();
-        }
-        this.listDetailOrder.add(detailOrder);
+        public void addToListDetailOrder(DetailOrder detailOrder){
+            if (this.listDetailOrder == null){
+                this.listDetailOrder = new ArrayList<>();
+            }
+            this.listDetailOrder.add(detailOrder);
     }
 }

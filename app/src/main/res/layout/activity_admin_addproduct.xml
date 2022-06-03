@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:orientation="vertical"
+    tools:context=".AdminProduct">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/img_detail_product_photo_admin"
+            android:layout_width="match_parent"
+            android:layout_height="138dp"
+            android:layout_marginBottom="20dp"></EditText>
+
+        <TextView
+            android:id="@+id/tv_brand"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@id/img_detail_product_photo_admin"
+            android:textColor="@color/red"
+            android:layout_marginTop="10dp"
+            android:text="Brand"
+            android:textSize="18dp" />
+
+        <EditText
+            android:id="@+id/tv_detail_product_brand_admin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_detail_product_photo_admin"
+            android:layout_marginLeft="80dp"></EditText>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@+id/tv_brand"
+            android:layout_marginTop="25dp"
+            android:text="Name"
+            android:textSize="18dp"
+            android:textColor="@color/red"/>
+
+
+        <EditText
+            android:id="@+id/tv_detail_product_name_admin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_below="@+id/tv_detail_product_brand_admin"></EditText>
+
+        <TextView
+            android:id="@+id/tv_detail_product_2_admin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_detail_product_name_admin"
+            android:layout_marginTop="20dp"
+            android:text="Giá :"
+            android:textColor="@color/red"
+            android:textSize="20sp"></TextView>
+
+        <EditText
+            android:id="@+id/tv_detail_product_price_admin"
+            android:layout_width="355dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/tv_detail_product_name_admin"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/tv_detail_product_2_admin"
+            android:textColor="@color/red"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_detail_product_3_admin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_detail_product_2_admin"
+            android:layout_marginTop="15dp"
+            android:text="Mô Tả Chi Tiết Sản Phẩm"
+            android:textColor="@color/red"
+            android:textSize="30dp"></TextView>
+
+        <EditText
+            android:id="@+id/tv_detail_product_description_admin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_detail_product_3_admin"
+            android:layout_marginBottom="30dp"
+            android:text=""
+            android:textSize="20dp"></EditText>
+
+
+        <Button
+            android:id="@+id/btn_add_product_admin"
+            android:layout_width="209dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_detail_product_description_admin"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="3dp"
+            android:text="AddProduct"
+            android:onClick="onClick_AddProduct"
+            tools:ignore="OnClick"/>
+
+    </RelativeLayout>
+
+</ScrollView>
