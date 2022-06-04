@@ -11,7 +11,7 @@ public class Product {
 
     private int numProduct = 1;
 
-    public Product(){
+    public Product() {
 
     }
 

@@ -160,7 +160,9 @@
                 android:background="@drawable/custom_button"
                 android:backgroundTint="@null"
                 android:text="Đặt Hàng"
-                app:backgroundTint="@null"></Button>
+                app:backgroundTint="@null">
+
+            </Button>
 
         </RelativeLayout>
 

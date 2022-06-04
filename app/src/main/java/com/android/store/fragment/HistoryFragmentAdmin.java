@@ -13,9 +13,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.store.Admin;
 import com.android.store.MainActivity;
 import com.android.store.R;
 import com.android.store.adapter.HistoryProductAdapter;
+import com.android.store.adapter.HistoryProductAdapterAdmin;
 import com.android.store.model.DetailOrder;
 import com.android.store.model.Order;
 import com.google.firebase.database.DataSnapshot;
@@ -24,13 +26,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistoryFragment extends Fragment {
+public class HistoryFragmentAdmin extends Fragment {
 
-    private MainActivity home;
+    private Admin home;
     private List<Order> listOrder;
     private List<DetailOrder> listDetailOrder;
 
@@ -39,9 +40,9 @@ public class HistoryFragment extends Fragment {
     private Button btnHistorySearch;
     private RecyclerView rcvHitorySearch;
 
-    private HistoryProductAdapter historyProductAdapter;
+    private HistoryProductAdapterAdmin historyProductAdapterAdmin;
 
-    public HistoryFragment() {
+    public HistoryFragmentAdmin() {
     }
 
     @Override
@@ -69,9 +70,9 @@ public class HistoryFragment extends Fragment {
         listOrder = new ArrayList<>();
         listDetailOrder = new ArrayList<>();
 
-        home = (MainActivity) getActivity();
+        home = (Admin) getActivity();
 
-        historyProductAdapter = new HistoryProductAdapter();
+        historyProductAdapterAdmin = new HistoryProductAdapterAdmin();
 
         edtHistoryPhone = mView.findViewById(R.id.edt_history_phone);
 
@@ -86,10 +87,10 @@ public class HistoryFragment extends Fragment {
     }
 
     private void setDataHistoryProductAdapter(){
-        historyProductAdapter.setData(listDetailOrder,listOrder,home);
+        historyProductAdapterAdmin.setData(listDetailOrder,listOrder,home);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(home,RecyclerView.VERTICAL,false);
         rcvHitorySearch.setLayoutManager(linearLayoutManager);
-        rcvHitorySearch.setAdapter(historyProductAdapter);
+        rcvHitorySearch.setAdapter(historyProductAdapterAdmin);
     }
 
     private void findOrder(){
@@ -105,7 +106,7 @@ public class HistoryFragment extends Fragment {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-              historyProductAdapter.notifyDataSetChanged();
+              historyProductAdapterAdmin.notifyDataSetChanged();
                 for (DataSnapshot dataOrder : snapshot.getChildren()){
                     Order order = dataOrder.getValue(Order.class);
                     order.setOrderNo(dataOrder.getKey());
@@ -138,7 +139,7 @@ public class HistoryFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot dataDetail : snapshot.getChildren()){
-                            historyProductAdapter.notifyDataSetChanged();
+                            historyProductAdapterAdmin.notifyDataSetChanged();
                             DetailOrder detailOrder = dataDetail.getValue(DetailOrder.class);
                             listDetailOrder.add(detailOrder);
                         }

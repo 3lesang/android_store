@@ -14,7 +14,10 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            >
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vp_slide_photo"
@@ -35,14 +38,16 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="6dp"
                 android:layout_below="@+id/circle_indicator"
                 android:background="@drawable/custom_edit_text_search"
                 android:padding="5dp"
                 android:completionThreshold="1"
                 android:hint="Bạn tìm gì"
+                android:focusedByDefault="false"
+                android:focusableInTouchMode="true"
                 android:drawableRight="@drawable/ic_baseline_search_24"
-                android:textSize="15sp">
+                android:textSize="16sp">
             </AutoCompleteTextView>
 
             <androidx.recyclerview.widget.RecyclerView

@@ -22,42 +22,38 @@
             android:src="@drawable/iphone12xanhla"
             />
 
-        <LinearLayout
+        <com.google.android.flexbox.FlexboxLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            app:flexWrap="wrap"
+            app:justifyContent="center"
 
             >
-            <TextView
-                android:id="@+id/tv_product_name_admin"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:fontFamily="sans-serif-smallcaps"
-                android:gravity="center_vertical"
-                android:layout_margin="2dp"
-                android:lines="1"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:text="name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textColor="@android:color/black" />
-            <TextView
-                android:id="@+id/tv_product_price_admin"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:fontFamily="sans-serif-smallcaps"
-                android:gravity="center_vertical"
-                android:lines="1"
-                android:padding="5dp"
-                android:text="price"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textColor="@android:color/black" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_product_name_admin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_margin="2dp"
+                    android:lines="1"
+                    android:padding="5dp"
+                    android:text="name"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:id="@+id/tv_product_price_admin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:lines="1"
+                    android:padding="5dp"
+                    android:text="price"
+                    android:textColor="@color/red" />
+            </LinearLayout>
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_edit_product_admin"
                 app:icon="@drawable/ic_baseline_edit_24"
@@ -74,11 +70,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:iconSize="16dp"
+
                 style="@style/Widget.App.Button.OutlinedButton.IconOnly"
                 >
 
             </com.google.android.material.button.MaterialButton>
-        </LinearLayout>
+        </com.google.android.flexbox.FlexboxLayout>
+
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

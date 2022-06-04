@@ -81,6 +81,8 @@ public class ProductAdapterAdmin extends RecyclerView.Adapter<ProductAdapterAdmi
                             // then call delete function
                             if(which==0) {
                                 deleteProduct(position,id);
+                                mListProduct.remove(product);
+                                notifyDataSetChanged();
                             }
 
                         }
@@ -129,6 +131,7 @@ public class ProductAdapterAdmin extends RecyclerView.Adapter<ProductAdapterAdmi
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 dataSnapshot.getRef().removeValue();
+
             }
 
             @Override

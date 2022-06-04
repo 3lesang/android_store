@@ -1,5 +1,7 @@
 package com.android.store.fragment;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,6 +28,7 @@ import com.android.store.R;
 import com.android.store.adapter.ProductAdapter;
 import com.android.store.adapter.ProductSearchAdapter;
 import com.android.store.adapter.SlidePhotoAdapter;
+import com.android.store.db.ConnectFB;
 import com.android.store.model.Product;
 import com.android.store.model.SlidePhoto;
 import com.google.firebase.database.ChildEventListener;
@@ -59,9 +62,10 @@ public class ProductFragment extends Fragment {
     private NestedScrollView nestedScrollViewProduct;
     private ProductAdapter productAdapter;
     private SlidePhotoAdapter slidePhotoAdapter;
-
-    private int limitProduct = 8;
-    private int startProduct = 1;
+    private DatabaseReference ref = new ConnectFB().getDBRef();
+    private int limitProduct = 6;
+    private int startProduct = 0;
+    private int totalProduct;
     public ProductFragment() {
     }
 
@@ -72,39 +76,27 @@ public class ProductFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_product, container, false);
 
         initItem();
+        listenFirebase();
 
         setDataSlidePhotoAdapter();
-
         setDataProductAdapter();
-
-        ArrayList<Product> listProduct = new ArrayList<>();
-        listProduct.add(new Product("https://img.fpt.shop/w_214/h_214/cmpr_10/m_letterbox_ffffff_100/https://fptshop.com.vn/Uploads/Originals/2020/8/5/637322682439532348_ss-note-20-ultra-5g-gold-dd.png", "Samsung Galaxy Note 20 Ultra", "Samsung Galaxy Note 20 Ultra được chế tác từ những vật liệu cao cấp hàng đầu hiện nay, với sự tỉ mỉ và chất lượng gia công thượng thừa, tạo nên chiếc điện thoại đẹp hơn những gì bạn có thể tưởng tượng. Không chỉ có kiểu dáng thanh lịch, màn hình không viền Infinity-O quyến rũ, Galaxy Note20 Ultra còn thể hiện sự cao cấp ở từng chi tiết nhỏ như các phần viền cạnh sáng bóng, họa tiết phay xước độc đáo trên khung máy, mang đến niềm cảm hứng cho người dùng ở mọi góc cạnh.", "samsung", 26990000));
-        listProduct.add(new Product("https://cdn.tgdd.vn/Products/Images/42/206176/samsung-galaxy-note-10-plus-silver-new-600x600.jpg", "Samsung Galaxy Note 10+", "Trông ngoại hình khá giống nhau, tuy nhiên Samsung Galaxy Note 10+ sở hữu khá nhiều điểm khác biệt so với Galaxy Note 10 và đây được xem là một trong những chiếc máy đáng mua nhất trong năm 2019, đặc biệt dành cho những người thích một chiếc máy màn hình lớn, camera chất lượng hàng đầu.", "samsung", 16490000));
-        listProduct.add(new Product("https://cdn.tgdd.vn/Products/Images/42/228744/iphone-12-pro-max-vang-new-600x600-600x600.jpg", "iPhone 12 Pro Max","iPhone 12 Pro Max 512GB - đẳng cấp từ tên gọi đến từng chi tiết. Ngay từ khi chỉ là tin đồn thì chiếc smartphone này đã làm đứng ngồi không yên bao “fan cứng” nhà Apple, với những nâng cấp vô cùng nổi bật hứa hẹn sẽ mang đến những trải nghiệm tốt nhất về mọi mặt mà chưa một chiếc iPhone tiền nhiệm nào có được.", "iphone", 41990000));
-        listProduct.add(new Product("https://cdn.tgdd.vn/Products/Images/42/190325/iphone-xr-hopmoi-den-600x600-2-600x600.jpg", "iPhone XR 64GB","Là chiếc điện thoại iPhone có mức giá dễ chịu, phù hợp với nhiều khách hàng hơn, iPhone Xr vẫn được ưu ái trang bị chip Apple A12 mạnh mẽ, màn hình tai thỏ cùng khả năng chống nước chống bụi.", "iphone", 12190000));
-        listProduct.add(new Product("https://cdn.tgdd.vn/Products/Images/42/232668/samsung-galaxy-z-fold-2-vang-600x600-600x600.jpg", "Samsung Galaxy Z Fold2 5G","Thuộc dòng smartphone cao cấp, Samsung Galaxy Z Fold2 5G được Samsung trau chuốt không chỉ vẻ ngoài sang trọng, tinh tế mà lẫn cả “nội thất” bên trong đầy mạnh mẽ khiến chiếc smartphone này hoàn toàn xứng đáng để được sở hữu.", "samsung", 50000000));
-        listProduct.add(new Product("https://cdn.tgdd.vn/Products/Images/42/210644/iphone-11-128gb-green-600x600.jpg", "iPhone 11 128GB","Được xem là phiên bản iPhone \\\"giá rẻ\\\" trong bộ 3 iPhone mới ra mắt nhưng iPhone 11 128GB vẫn sở hữu cho mình rất nhiều ưu điểm mà hiếm có một chiếc smartphone nào khác sở hữu. Nâng cấp mạnh mẽ về cụm camera Năm nay với iPhone 11 thì Apple đã nâng cấp khá nhiều về camera nếu so sánh với chiếc iPhone Xr 128GB năm ngoái.", "iphone", 19490000));
-        listProduct.add(new Product("https://cdn.tgdd.vn/Products/Images/42/210644/iphone-11-128gb-green-600x600.jpg", "","iPhone SE 256GB 2020 cuối cùng đã được Apple ra mắt, với ngoại hình nhỏ gọn được sao chép từ iPhone 8 nhưng mang trong mình một hiệu năng mạnh mẽ với vi xử lý A13 Bionic, mức giá hấp dẫn hứa hẹn sẽ là yếu tố thu hút", "iphone", 19490000));
-
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("DBProduct");
-        for(Product product : listProduct) {
-            myRef.push().setValue(product);
-        }
         return mView;
     }
 
+
+
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void initItem(){
+    private void initItem() {
+
         rcvProduct = mView.findViewById(R.id.rcv_product);
         viewPagerSlidePhoto = mView.findViewById(R.id.vp_slide_photo);
         circleIndicator = mView.findViewById(R.id.circle_indicator);
         atcProductSearch = mView.findViewById(R.id.atc_product_search);
+        atcProductSearch.clearFocus();
         nestedScrollViewProduct = mView.findViewById(R.id.scrollViewProduct);
         listSlidePhoto = getListSlidePhoto();
         listAllProduct = new ArrayList<Product>();
-        getProducts(listAllProduct);
+//        getProducts(listAllProduct);
 
         nestedScrollViewProduct.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -113,19 +105,26 @@ public class ProductFragment extends Fragment {
                 if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) {
                     // in this method we are incrementing page number,
                     // making progress bar visible and calling get data method.
-                    limitProduct++;
+//                    limitProduct++;
                     // on below line we are making our progress bar visible.
 //                    loadingPB.setVisibility(View.VISIBLE);
-//                    if (count < 20) {
-//                        // on below line we are again calling
-//                        // a method to load data in our array list.
-//
+
+
+
+//                    if (startProduct < totalProduct) {
+//                        System.out.println(startProduct);
+//                        getProducts(listAllProduct);
 //                    }
-                    getProducts(listAllProduct);
+//
+//
+//                    productAdapter.setData(listAllProduct,home);
+//                    rcvProduct.setAdapter(productAdapter);
+                    setProductSearchAdapter(listAllProduct);
                 }
             }
         });
 
+//        setProductSearchAdapter(listAllProduct);
         home = (MainActivity) getActivity();
     }
 
@@ -206,9 +205,8 @@ public class ProductFragment extends Fragment {
 
     private void getProducts(List<Product> products) {
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("DBProduct");
-        Query productListQuery = myRef.limitToFirst(limitProduct).orderByChild("brand")
+
+        Query productListQuery = ref.limitToFirst(limitProduct).orderByChild("productName")
                 .startAt(startProduct);
 
         productListQuery.addValueEventListener(new ValueEventListener() {
@@ -220,12 +218,14 @@ public class ProductFragment extends Fragment {
                 for (DataSnapshot data : snapshot.getChildren()){
                     Product product = data.getValue(Product.class);
                     product.setId(data.getKey());
-                    System.out.println(data.getKey());
+                    System.out.println(product.getNumProduct());
                     products.add(product);
 
+
                 }
-                setProductSearchAdapter(products);
-                startProduct += (limitProduct + 1);
+//                setProductSearchAdapter(products);
+//                startProduct += (limitProduct + 1);
+                startProduct += limitProduct;
             }
 
             @Override
@@ -234,11 +234,53 @@ public class ProductFragment extends Fragment {
                         +databaseError.toString(),Toast.LENGTH_LONG).show();
                 Log.d("MYTAG","onCancelled"+ databaseError.toString());
             }
-
-
         });
 
     }
+
+    public void listenFirebase() {
+//        List<Product> products = new ArrayList<>();
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+
+                Product product = dataSnapshot.getValue(Product.class);
+//                Log.d(TAG, "onChildAdded:" + product.getNumProduct());
+                totalProduct++;
+                listAllProduct.add(product);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
+
+//                Product product = dataSnapshot.getValue(Product.class);
+//                System.out.println(product.getProductName());
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+//                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
+                Toast.makeText(getActivity(), "Failed to load comments.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        ref.addChildEventListener(childEventListener);
+    }
+
+
 
 
 }

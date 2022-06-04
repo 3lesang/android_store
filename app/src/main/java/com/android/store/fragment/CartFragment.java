@@ -147,7 +147,7 @@ public class CartFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void addDataOrder(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("DbOrder");
+        DatabaseReference myRef = database.getReference("DBOrder");
 
         Map<String,Object> map = new HashMap<>();
 
@@ -226,9 +226,9 @@ public class CartFragment extends Fragment {
     // mode = 0 : giảm
     // mode = 1 : tăng
     public void setTotalPrice(int mode,int count, int priceProduct ){
-        if( mode == 0){
+        if( mode == 0) {
             totalPrice = totalPrice - priceProduct * count;
-        }else if (mode == 1){
+        }else if (mode == 1) {
             totalPrice = totalPrice + priceProduct * count;
         }
 

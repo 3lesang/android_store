@@ -17,6 +17,9 @@ import android.widget.Toast;
 
 import com.android.store.adapter.ProductAdapter;
 import com.android.store.model.Product;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,9 +33,9 @@ public class AdminProduct extends AppCompatActivity {
     private RecyclerView rcvProduct;
     private ProductAdapter mProductAdapter;
     private List<Product> mListProduct;
-    EditText NameProduct,PriceProduct,DescriptionProduct,BrandProduct,imageProduct;
+    TextInputEditText NameProduct,PriceProduct,DescriptionProduct,BrandProduct,imageProduct;
 
-    Button btnInsertdata;
+    FloatingActionButton btnInsertdata;
     DatabaseReference ProductDbRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class AdminProduct extends AppCompatActivity {
         BrandProduct=findViewById(R.id.tv_detail_product_brand_admin);
 
 
-        btnInsertdata= (Button)findViewById(R.id.btn_add_product_admin);
+        btnInsertdata= findViewById(R.id.btn_add_product_admin);
 
         btnInsertdata.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -20,7 +20,9 @@
              android:layout_width="match_parent"
              android:layout_height="200dp"
              android:layout_marginBottom="20dp"
-             android:src="@drawable/iphone12xanhla"></ImageView>
+             android:src="@drawable/iphone12xanhla">
+
+         </ImageView>
 
          <TextView
              android:id="@+id/tv_detail_product_name"
@@ -29,7 +31,9 @@
              android:layout_below="@+id/img_detail_product_photo"
              android:text="Iphone 12"
              android:textColor="@color/text_color"
-             android:textSize="30sp"></TextView>
+             android:textSize="30sp">
+
+         </TextView>
 
          <TextView
              android:id="@+id/tv_detail_product_2"
@@ -39,7 +43,9 @@
              android:layout_marginTop="10dp"
              android:text="Giá :"
              android:textColor="@color/red"
-             android:textSize="20sp"></TextView>
+             android:textSize="20sp">
+
+         </TextView>
 
          <TextView
              android:id="@+id/tv_detail_product_price"
@@ -51,7 +57,9 @@
              android:layout_toRightOf="@+id/tv_detail_product_2"
              android:text="20.900.000 Đ"
              android:textColor="@color/red"
-             android:textSize="20sp"></TextView>
+             android:textSize="20sp">
+
+         </TextView>
 
          <Button
              android:id="@+id/btn_detail_product_buy"
@@ -65,7 +73,9 @@
              android:text="Mua Ngay"
              android:textColor="@color/black"
              android:textSize="20dp"
-             app:backgroundTint="@null"></Button>
+             app:backgroundTint="@null">
+
+         </Button>
 
          <TextView
              android:id="@+id/tv_detail_product_3"
@@ -74,7 +84,9 @@
              android:layout_below="@+id/btn_detail_product_buy"
              android:text="Mô Tả Chi Tiết Sản Phẩm"
              android:textColor="@color/red"
-             android:textSize="30dp"></TextView>
+             android:textSize="30dp">
+
+         </TextView>
 
          <TextView
              android:id="@+id/tv_detail_product_description"
@@ -83,7 +95,9 @@
              android:layout_below="@+id/tv_detail_product_3"
              android:layout_marginBottom="30dp"
              android:text="Mới đây, Apple đã trình diện đến người dùng mẫu điện thoại iPhone 12 128 GB với sự tuyên bố về một kỷ nguyên mới của iPhone: iPhone 5G siêu nhanh, nâng cấp về màn hình và hiệu năng hứa hẹn đây sẽ là smartphone cao cấp đáng chú ý nhất trong năm nay."
-             android:textSize="20dp"></TextView>
+             android:textSize="20dp">
+
+         </TextView>
 
       </RelativeLayout>
 
