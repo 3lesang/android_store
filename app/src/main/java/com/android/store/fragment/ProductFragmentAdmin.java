@@ -80,7 +80,7 @@ public class ProductFragmentAdmin extends Fragment {
         btnDeleteProductAdmin = mView.findViewById(R.id.btn_delete_product_admin);
         btnDeleteProductAdmin = mView.findViewById(R.id.btn_edit_product_admin);
         listAllProduct = new ArrayList<Product>();
-        getProducts(listAllProduct);
+//        getProducts(listAllProduct);
 
 
 

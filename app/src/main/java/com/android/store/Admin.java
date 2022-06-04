@@ -13,10 +13,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.store.fragment.CartFragment;
+import com.android.store.fragment.DetailProductFragment;
 import com.android.store.fragment.HistoryFragment;
 import com.android.store.fragment.HistoryFragmentAdmin;
+import com.android.store.fragment.OrderInfoFragment;
 import com.android.store.fragment.ProductFragment;
 import com.android.store.fragment.ProductFragmentAdmin;
+import com.android.store.model.Order;
 import com.android.store.model.Product;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -110,6 +113,18 @@ public class Admin extends AppCompatActivity {
     }
 
 
+    public void toDetailProductFragment(Product product){
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.contet_frame_admin, new DetailProductFragment(product,listCartProduct));
+        fragmentTransaction.commit();
+    }
+
+    public void toOrderInfoFragment(Order orderInfo){
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.contet_frame_admin, new OrderInfoFragment(orderInfo));
+        fragmentTransaction.addToBackStack(OrderInfoFragment.TAG);
+        fragmentTransaction.commit();
+    }
     public void onClick_AddProduct(View view)
     {
         Intent intent = new Intent(Admin.this, AdminProduct.class);
