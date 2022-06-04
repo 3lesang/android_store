@@ -4,6 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.39384615384615385" />
+        <entry key="..\:/dhspkt/lap trinh di dong/android_store/app/src/main/res/layout/activity_admin_addproduct.xml" value="0.1" />
+        <entry key="..\:/dhspkt/lap trinh di dong/android_store/app/src/main/res/layout/activity_admin_product.xml" value="0.1" />
+        <entry key="..\:/dhspkt/lap trinh di dong/android_store/app/src/main/res/layout/fragment_detail_product.xml" value="0.1" />
+        <entry key="..\:/dhspkt/lap trinh di dong/android_store/app/src/main/res/layout/item_product.xml" value="0.1" />
+        <entry key="..\:/dhspkt/lap trinh di dong/android_store/app/src/main/res/layout/item_product_admin.xml" value="0.264" />
+        <entry key="..\:/dhspkt/lap trinh di dong/android_store/app/src/main/res/layout/item_search.xml" value="0.25416666666666665" />
+        <entry key="..\:/dhspkt/lap trinh di dong/android_store/app/src/main/res/layout/item_slide_photo.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/btndesign.xml" value="0.2245" />
         <entry key="app/src/main/res/drawable/bg_form.xml" value="0.215" />
         <entry key="app/src/main/res/drawable/btndesign.xml" value="0.2245" />
