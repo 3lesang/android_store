@@ -1,6 +1,9 @@
 package com.android.store.fragment;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +23,8 @@ import com.android.store.adapter.HistoryProductAdapter;
 import com.android.store.adapter.HistoryProductAdapterAdmin;
 import com.android.store.model.DetailOrder;
 import com.android.store.model.Order;
+import com.android.store.model.Product;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,7 +56,7 @@ public class HistoryFragmentAdmin extends Fragment {
 
         // Khi quay lại từ fragment OrderInfo sẽ thực hiện tìm kiếm lại
         if (!edtHistoryPhone.getText().toString().trim().isEmpty()){
-            findOrder();
+//            findOrder();
         }
     }
 
@@ -81,9 +86,10 @@ public class HistoryFragmentAdmin extends Fragment {
         btnHistorySearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findOrder();
+//                findOrder();
             }
         });
+        loadOrder();
     }
 
     private void setDataHistoryProductAdapter(){
@@ -93,25 +99,58 @@ public class HistoryFragmentAdmin extends Fragment {
         rcvHitorySearch.setAdapter(historyProductAdapterAdmin);
     }
 
-    private void findOrder(){
+//    private void findOrder(){
+//
+//        listOrder.clear();
+//        listDetailOrder.clear();
+//
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("DBOrder");
+//
+//        myRef.orderByChild("custPhone").equalTo(edtHistoryPhone.getText().toString())
+//                .addValueEventListener(new ValueEventListener() {
+//
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//              historyProductAdapterAdmin.notifyDataSetChanged();
+//                for (DataSnapshot dataOrder : snapshot.getChildren()){
+//                    Order order = dataOrder.getValue(Order.class);
+//                    order.setOrderNo(dataOrder.getKey());
+//                    listOrder.add(order);
+//                }
+//
+//                if (listOrder.size() > 0){
+//                    // Lấy thông tin detail order
+//                    findDetailOrder(myRef);
+//                }
+//                else {
+//                    Toast.makeText(getContext(),"Không tìm thấy lịch sử đặt hàng",Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(getContext(),"Không lấy được thông tin đơn hàng từ firebase",Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
+    private void loadOrder() {
         listOrder.clear();
         listDetailOrder.clear();
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("DBOrder");
 
-        myRef.orderByChild("custPhone").equalTo(edtHistoryPhone.getText().toString())
-                .addValueEventListener(new ValueEventListener() {
-
+        ChildEventListener childEventListener = new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-              historyProductAdapterAdmin.notifyDataSetChanged();
-                for (DataSnapshot dataOrder : snapshot.getChildren()){
-                    Order order = dataOrder.getValue(Order.class);
-                    order.setOrderNo(dataOrder.getKey());
-                    listOrder.add(order);
-                }
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+
+                historyProductAdapterAdmin.notifyDataSetChanged();
+
+                Order order = dataSnapshot.getValue(Order.class);
+                order.setOrderNo(dataSnapshot.getKey());
+                listOrder.add(order);
 
                 if (listOrder.size() > 0){
                     // Lấy thông tin detail order
@@ -120,16 +159,36 @@ public class HistoryFragmentAdmin extends Fragment {
                 else {
                     Toast.makeText(getContext(),"Không tìm thấy lịch sử đặt hàng",Toast.LENGTH_SHORT).show();
                 }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
+
+//                Product product = dataSnapshot.getValue(Product.class);
+//                System.out.println(product.getProductName());
+            }
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+//                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
 
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(),"Không lấy được thông tin đơn hàng từ firebase",Toast.LENGTH_SHORT).show();
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
+                Toast.makeText(getActivity(), "Failed to load comments.",
+                        Toast.LENGTH_SHORT).show();
             }
-        });
-    }
+        };
+        myRef.addChildEventListener(childEventListener);
 
+    }
     private void findDetailOrder( DatabaseReference myRef){
         if (listOrder.size() > 0){
             for (int i = 0; i<listOrder.size(); i++){
