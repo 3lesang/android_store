@@ -62,7 +62,7 @@ public class Login extends AppCompatActivity {
                     startActivity(intent);
                 }
                else{
-                    Toast.makeText(Login.this, str1+ str2.length()+"Nhập sai Username và Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, "Nhập sai Username và Password", Toast.LENGTH_SHORT).show();
                }
 
             }
