@@ -75,9 +75,10 @@ public class ProductFragment extends Fragment {
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_product, container, false);
 
+
         initItem();
         listenFirebase();
-
+        getProducts();
         setDataSlidePhotoAdapter();
         setDataProductAdapter();
         return mView;
@@ -97,6 +98,7 @@ public class ProductFragment extends Fragment {
         listSlidePhoto = getListSlidePhoto();
         listAllProduct = new ArrayList<Product>();
 //        getProducts(listAllProduct);
+
 
         nestedScrollViewProduct.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -119,12 +121,11 @@ public class ProductFragment extends Fragment {
 //
 //                    productAdapter.setData(listAllProduct,home);
 //                    rcvProduct.setAdapter(productAdapter);
-                    setProductSearchAdapter(listAllProduct);
+//                    setProductSearchAdapter(listAllProduct);
                 }
             }
         });
 
-//        setProductSearchAdapter(listAllProduct);
         home = (MainActivity) getActivity();
     }
 
@@ -203,7 +204,7 @@ public class ProductFragment extends Fragment {
         return listSlidePhoto;
     }
 
-    private void getProducts(List<Product> products) {
+    private void getProducts() {
 
 
         Query productListQuery = ref.limitToFirst(limitProduct).orderByChild("productName")
@@ -213,17 +214,16 @@ public class ProductFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
 
-                productAdapter.notifyDataSetChanged();
-
-                for (DataSnapshot data : snapshot.getChildren()){
-                    Product product = data.getValue(Product.class);
-                    product.setId(data.getKey());
-                    System.out.println(product.getNumProduct());
-                    products.add(product);
-
-
-                }
-//                setProductSearchAdapter(products);
+//                productAdapter.notifyDataSetChanged();
+//
+//                for (DataSnapshot data : snapshot.getChildren()){
+//                    Product product = data.getValue(Product.class);
+//                    product.setId(data.getKey());
+//                    System.out.println(product.getNumProduct());
+//                    products.add(product);
+//
+//                }
+                setProductSearchAdapter(listAllProduct);
 //                startProduct += (limitProduct + 1);
                 startProduct += limitProduct;
             }
@@ -248,6 +248,7 @@ public class ProductFragment extends Fragment {
 //                Log.d(TAG, "onChildAdded:" + product.getNumProduct());
                 totalProduct++;
                 listAllProduct.add(product);
+
             }
 
             @Override

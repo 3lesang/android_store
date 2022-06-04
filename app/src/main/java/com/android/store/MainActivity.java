@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
 
-                switch (position){
+                switch (position) {
                     case 0:
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.contet_frame, new ProductFragment());

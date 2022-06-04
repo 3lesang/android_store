@@ -72,8 +72,8 @@ public class Admin extends AppCompatActivity {
     private void setDataBotNavHome() {
 
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.tab_product, R.drawable.ic_baseline_home_24, R.color.teal_200);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.tab_history, R.drawable.ic_baseline_history_24, R.color.yellow);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.log_out, R.drawable.ic_baseline_login_24, R.color.yellow);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem("Đơn hàng", R.drawable.ic_baseline_history_24, R.color.yellow);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem("Thoát", R.drawable.ic_baseline_login_24, R.color.yellow);
         ahBotNavAdmin.addItem(item1);
         ahBotNavAdmin.addItem(item2);
         ahBotNavAdmin.addItem(item3);
